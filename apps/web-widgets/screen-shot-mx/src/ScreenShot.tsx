@@ -2,6 +2,7 @@ import { createElement, FC } from "react";
 import { jsPDF } from "jspdf";
 import { toCanvas } from "html-to-image";
 import { ScreenShotContainerProps } from "../typings/ScreenShotProps";
+import {  } from "../node_modules/mendix";
 
 import { getToday } from "./utils";
 
@@ -54,16 +55,18 @@ const ScreenShot: FC<ScreenShotContainerProps> = props => {
              */
             const pageCanvas = document.createElement("canvas");
 
-            //Set Empty Canvas Height and Widget to the of A4 Page
-            pageCanvas.width = pageWidth;
-            pageCanvas.height = pageHeight;
-
             // Get context of Canvas
             const ctx = await pageCanvas.getContext("2d");
-
             if (!ctx) {
                 throw new Error("⚠️ No Context for Canvas Found");
             }
+
+            ctx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
+
+            //Set Empty Canvas Height and Widget to the of A4 Page
+            pageCanvas.width = pageWidth;
+            pageCanvas.height = pageHeight;
+            
             // Set Background to White (TODO for PNG ect. we would want to expand this)
             ctx.fillStyle = BACKGROUND_COLOR;
             // Draw a White square the size of an A4 Page
@@ -92,7 +95,13 @@ const ScreenShot: FC<ScreenShotContainerProps> = props => {
             }
         }
         // And Finally Save PDF
-        newDoc.save(`${props.prefixPageName}_${getToday()}.pdf`);
+        if (props.afterCreateAction){
+            props.volatileDate?.setTextValue(await newDoc.output('dataurlstring'));
+            props.afterCreateAction.execute();
+        }
+        else{ 
+            newDoc.save(`${props.prefixPageName}_${getToday()}.pdf`);
+        }
     };
 
     return <div onClick={onClick}>{props.printButton}</div>;

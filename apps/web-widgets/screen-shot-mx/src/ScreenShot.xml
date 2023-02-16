@@ -42,6 +42,17 @@
                 <caption>Prefix for Page Name</caption>
                 <description />
             </property>
+            <property key="volatileDate" type="attribute" required="false">
+                  <caption>Editable date</caption>
+                  <description>This attribute is used when a user clicks on a date in the calendar</description>
+                  <attributeTypes>
+                      <attributeType name="String"/>
+                  </attributeTypes>
+            </property>
+            <property key="afterCreateAction" type="action" required="false">
+                <caption>After create action</caption>
+                <description />                
+            </property>
             <property key="printButton" type="widgets" required="true">
                 <caption>Print Button</caption>
                 <description>Button that does nothing</description>

@@ -4,6 +4,7 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
+import { ActionValue, EditableValue } from "mendix";
 
 export type PageSizeEnum = "letter" | "a4" | "a5" | "a6";
 
@@ -18,6 +19,8 @@ export interface ScreenShotContainerProps {
     pageOrientation: PageOrientationEnum;
     classNameToFound: string;
     prefixPageName: string;
+    volatileDate?: EditableValue<string>;
+    afterCreateAction?: ActionValue;
     printButton: ReactNode;
 }
 
@@ -30,5 +33,7 @@ export interface ScreenShotPreviewProps {
     pageOrientation: PageOrientationEnum;
     classNameToFound: string;
     prefixPageName: string;
+    volatileDate: string;
+    afterCreateAction: {} | null;
     printButton: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
 }
